@@ -4,6 +4,7 @@ from core.models import PublishedModel
 
 User = get_user_model()
 
+
 class Category(PublishedModel):
     title = models.CharField(verbose_name="Заголовок", max_length=256)
     description = models.TextField(verbose_name="Описание")
@@ -24,7 +25,7 @@ class Category(PublishedModel):
 
 class Location(PublishedModel):
     name = models.CharField(
-        verbose_name = 'Название места',
+        verbose_name='Название места',
         max_length=256
     )
 

@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import Category, Location, Post
 
+
 class PostAdmin(admin.ModelAdmin):
     list_display = (
         'title',
@@ -26,7 +27,8 @@ class PostAdmin(admin.ModelAdmin):
 
     def text_short(self, object: Post) -> str:
         return f'{object.text[:50]}...'
-    
+
+
 class CategoryAdmin(admin.ModelAdmin):
 
     list_display = (
@@ -47,7 +49,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
     def description_short(self, object: Category) -> str:
         return f'{object.description[:50]}...'
-    
+
+
 class LocationAdmin(admin.ModelAdmin):
     list_display = (
         'name',
@@ -57,6 +60,7 @@ class LocationAdmin(admin.ModelAdmin):
     list_editable = ('is_published',)
     list_filter = ('name',)
     list_per_page = 25
+
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Location, LocationAdmin)

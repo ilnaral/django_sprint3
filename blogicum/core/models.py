@@ -1,7 +1,9 @@
 from django.db import models
 
+
 class PublishedModel(models.Model):
-    """Абстрактная модель. Добвляет флаги is_published и created_at."""    
+    """Абстрактная модель. Добвляет флаги is_published и created_at."""
+
     is_published = models.BooleanField(
         verbose_name="Опубликовано",
         default=True,
