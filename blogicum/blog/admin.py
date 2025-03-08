@@ -4,6 +4,7 @@ from .models import Category, Location, Post
 
 from . import constants
 
+
 class PostAdmin(admin.ModelAdmin):
     list_display = (
         'title',
