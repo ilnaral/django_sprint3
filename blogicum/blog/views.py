@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 
 from .models import Post, Category
@@ -15,7 +16,7 @@ def posts():
         is_published=True,
         category__is_published=True,
         pub_date__lte=datetime.now()
-    ).order_by('title')
+    )
 
 
 def index(request):
@@ -36,6 +37,9 @@ def category_posts(request, category_slug):
         slug=category_slug,
         is_published=True
     )
-    context = {'category': category,
-               'post_list': posts().filter(category=category)}
+    post_list = category.posts.filter(
+        is_published=True,
+        pub_date__lte=timezone.now()
+    )
+    context = {'category': category, 'post_list': post_list}
     return render(request, 'blog/category.html', context)

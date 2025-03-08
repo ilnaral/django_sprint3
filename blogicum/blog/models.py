@@ -1,12 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+
 from core.models import PublishedModel
+from .constants import MAX_LENGTH
 
 User = get_user_model()
 
 
 class Category(PublishedModel):
-    title = models.CharField(verbose_name="Заголовок", max_length=256)
+    title = models.CharField(verbose_name="Заголовок", max_length=MAX_LENGTH)
     description = models.TextField(verbose_name="Описание")
     slug = models.SlugField(
         verbose_name="Идентификатор",
@@ -18,6 +20,7 @@ class Category(PublishedModel):
     class Meta:
         verbose_name = "категория"
         verbose_name_plural = "Категории"
+        ordering = ('created_at',)
 
     def __str__(self):
         return self.title
@@ -25,13 +28,14 @@ class Category(PublishedModel):
 
 class Location(PublishedModel):
     name = models.CharField(
-        verbose_name='Название места',
-        max_length=256
+        verbose_name="Название места",
+        max_length=MAX_LENGTH
     )
 
     class Meta:
         verbose_name = "местоположение"
         verbose_name_plural = "Местоположения"
+        ordering = ('-created_at',)
 
     def __str__(self):
         return self.name
@@ -40,7 +44,7 @@ class Location(PublishedModel):
 class Post(PublishedModel):
     title = models.CharField(
         verbose_name="Заголовок",
-        max_length=256
+        max_length=MAX_LENGTH
     )
     text = models.TextField("Текст")
     pub_date = models.DateTimeField(
