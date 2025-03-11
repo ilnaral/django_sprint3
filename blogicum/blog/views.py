@@ -1,9 +1,10 @@
 from datetime import datetime
 
+from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
-from django.shortcuts import render, get_object_or_404
 
-from .models import Post, Category
+from .constants import INDEX_PAGE_POSTS_COUNT
+from .models import Category, Post
 
 
 def posts():
@@ -21,7 +22,8 @@ def posts():
 
 def index(request):
     """Лента записей."""
-    return render(request, 'blog/index.html', {'post_list': posts()[:5]})
+    post_list = posts()[:INDEX_PAGE_POSTS_COUNT]
+    return render(request, 'blog/index.html', {'post_list': post_list})
 
 
 def post_detail(request, post_id):
@@ -41,5 +43,8 @@ def category_posts(request, category_slug):
         is_published=True,
         pub_date__lte=timezone.now()
     )
-    context = {'category': category, 'post_list': post_list}
+    all_posts = category.posts.all()
+    context = {'category': category,
+               'post_list': post_list,
+               'all_posts': all_posts}
     return render(request, 'blog/category.html', context)

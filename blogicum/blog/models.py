@@ -20,7 +20,7 @@ class Category(PublishedModel):
     class Meta:
         verbose_name = "категория"
         verbose_name_plural = "Категории"
-        ordering = ('created_at',)
+        ordering = ("created_at",)
 
     def __str__(self):
         return self.title
@@ -35,7 +35,7 @@ class Location(PublishedModel):
     class Meta:
         verbose_name = "местоположение"
         verbose_name_plural = "Местоположения"
-        ordering = ('-created_at',)
+        ordering = ("-created_at",)
 
     def __str__(self):
         return self.name
@@ -77,7 +77,7 @@ class Post(PublishedModel):
     class Meta:
         verbose_name = "публикация"
         verbose_name_plural = "Публикации"
-        ordering = ('-pub_date',)
+        ordering = ("-pub_date",)
 
     def __str__(self):
         return self.title
