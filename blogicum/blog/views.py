@@ -29,13 +29,13 @@ def index(request):
 
 
 def post_detail(request, post_id):
-    """Детали поста."""
+    """Полный/детальный текст поста."""
     post = get_object_or_404(posts(), pk=post_id)
     return render(request, 'blog/detail.html', {'post': post})
 
 
 def category_posts(request, category_slug):
-    """Посты категории."""
+    """Показ публикации по определенной категории."""
     category = get_object_or_404(
         Category,
         slug=category_slug,
