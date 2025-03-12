@@ -1,15 +1,17 @@
 from datetime import datetime
 
 from django.shortcuts import get_object_or_404, render
-from django.utils import timezone
 
 from .constants import INDEX_PAGE_POSTS_COUNT
 from .models import Category, Post
 
 
-def posts():
+def posts(post_list=None):
+    """Базовый queryset для фильтрации постов по умолчанию."""
+    if post_list is None:
+        post_list = Post.objects.all()
     """Посты из БД."""
-    return Post.objects.select_related(
+    return post_list.select_related(
         'category',
         'location',
         'author'
@@ -27,24 +29,20 @@ def index(request):
 
 
 def post_detail(request, post_id):
-    """Полный/детальный текст поста."""
+    """Детали поста."""
     post = get_object_or_404(posts(), pk=post_id)
     return render(request, 'blog/detail.html', {'post': post})
 
 
 def category_posts(request, category_slug):
-    """Показ публикации по определенной категории."""
+    """Посты категории."""
     category = get_object_or_404(
         Category,
         slug=category_slug,
         is_published=True
     )
-    post_list = category.posts.filter(
-        is_published=True,
-        pub_date__lte=timezone.now()
-    )
-    all_posts = category.posts.all()
-    context = {'category': category,
-               'post_list': post_list,
-               'all_posts': all_posts}
-    return render(request, 'blog/category.html', context)
+    post_list = posts(category.posts.all())
+    return render(request, 'blog/category.html', {
+        'category': category,
+        'post_list': post_list
+    })
